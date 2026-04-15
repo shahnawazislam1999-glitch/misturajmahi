@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mybaccha</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           RESET AND BASE STYLES
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #f5f5f5; /* Gallery background */
+        }
+
+        /* =========================================
+           BANNER SECTION STYLES
+           ========================================= */
+        .banner-section {
+            /* Soft Valentine's Day pink/red gradient */
+            background: linear-gradient(135deg, #f56b6b 0%, #e64a4a 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .landing-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 4rem;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header.banner-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+
+        .image-column {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .image-mask {
+            width: 100%;
+            max-width: 500px;
+            height: 600px;
+            border-radius: 0 300px 300px 0;
+            overflow: hidden;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
+            background-color: #ffb6c1; 
+        }
+
+        .image-mask img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .text-column {
+            flex: 1;
+            position: relative;
+            padding-right: 2rem;
+        }
+
+        .main-title {
+            font-size: 5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            opacity: 0.9;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #e64a4a;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .quote-section {
+            margin-top: 2rem;
+        }
+
+        .quote {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .signature {
+            font-size: 0.9rem;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .date-display {
+            position: absolute;
+            bottom: -2rem;
+            right: 0;
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: right;
+        }
+
+        .date-display sup {
+            font-size: 1rem;
+        }
+
+        @media (max-width: 968px) {
+            .content-wrapper {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .image-mask {
+                border-radius: 300px 300px 0 0;
+                height: 400px;
+                margin: 0 auto;
+            }
+            .button-group {
+                justify-content: center;
+            }
+            .date-display {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                text-align: center;
+                margin-top: 2rem;
+            }
+            .main-title {
+                font-size: 4rem;
+            }
+        }
+
+        /* =========================================
+           GALLERY SECTION STYLES
+           ========================================= */
+        #gallery-section {
+            text-align: center;
+            background: #f5f5f5;
+        }
+
+        #gallery-section h2.gallery-header {
+            padding: 20px;
+            background: #222;
+            color: white;
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .header-sub {
+            display: block;
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: 5px;
+            color: #ccc;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-auto-rows: 200px;
+            grid-auto-flow: dense;
+            gap: 15px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 250px; 
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gallery {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .img-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f4f4f4 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .img-wrapper:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .img-wrapper.loaded img {
+            opacity: 1;
+        }
+        
+        .img-wrapper.loaded {
+            animation: none;
+            background: none;
+        }
+
+        .gallery .img-wrapper:nth-child(7n + 1) { grid-column: span 2; grid-row: span 2; }
+        .gallery .img-wrapper:nth-child(7n + 2),
+        .gallery .img-wrapper:nth-child(7n + 5) { grid-row: span 2; }
+        .gallery .img-wrapper:nth-child(7n + 4) { grid-column: span 2; }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .popup span {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 35px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .popup span:hover {
+            color: #ff4d4d;
+        }
+
+        #gallery-section footer {
+            background: #222;
+            color: white;
+            padding: 15px;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="banner-section">
+        <div class="landing-container">
+            
+            <header class="banner-header">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span>To Mistu Bacha</span>
+                </div>
+            </header>
+
+            <main class="content-wrapper">
+                
+                <div class="image-column">
+                    <div class="image-mask">
+                        <img id="couple-photo" src="image/d0.jpeg">
+                    </div>
+                </div>
+
+                <div class="text-column">
+                    <h1 class="main-title">
+                        MISTU<br>
+                        RAJ<br>
+                        MAHI
+                    </h1>
+                    
+                    <p class="description">
+                        Mui always tok val paim baccha , alway forever and ever mui kno dino cheat korim na never and ever.
+                    </p>
+
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="galleryBtn">AMAR BEST PHOTO</button>
+                        
+                    </div>
+
+                    <div class="quote-section">
+                        <p class="quote">" Where there is love, there is life! "</p>
+                        <p class="signature">- Mui shoday tok val pay thakim dudu</p>
+                    </div>
+
+                    <div class="date-display">
+                        21<sup>st</sup><br>Feb 2023
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="gallery-section">
+        <h2 class="gallery-header">
+            OUR WORLD <br>
+            <span class="header-sub">
+               ❤💖💖 I WILL ALWAYS LOVE YOU BACCHA FOREVER  ❤💖💖
+            </span>
+        </h2>
+
+        <div class="gallery" id="gallery"></div>
+
+        <div class="popup" id="popup">
+            <span onclick="closePopup()">&times;</span>
+            <img id="popupImg">
+        </div>
+
+        <footer>
+            <p>This website is developed by Raj FOR my cute little princess 💖❤Mistu💖💖 | through your ego side and Contact me - 83999 64358 (i will always there for you)</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // --- Banner Button Logic ---
+            const galleryBtn = document.getElementById("galleryBtn");
+            const websiteBtn = document.getElementById("websiteBtn");
+
+            if(galleryBtn) {
+                // Scroll smoothly to the gallery section
+                galleryBtn.addEventListener("click", () => {
+                    document.getElementById("gallery-section").scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                });
+            }
+
+            if(websiteBtn) {
+                websiteBtn.addEventListener("click", () => {
+                    alert("Redirecting to external website...");
+                });
+            }
+
+            // --- Gallery Logic ---
+            const images = [
+                "image/c1.jpeg", "image/d1.jpeg", "image/d2.jpeg", "image/d3.jpeg",
+                "image/d4.jpeg", "image/d5.jpeg", "image/d6.jpeg", "image/d7.jpeg",
+                "image/d8.jpeg", "image/d9.jpeg", "image/d10.jpeg", "image/d11.jpeg",
+                "image/d12.jpeg", "image/d13.jpeg", "image/d14.jpeg", "image/d15.jpeg",
+                "image/d16.jpeg", "image/d17.jpeg", "image/d18.jpeg", "image/d19.jpeg",
+                "image/d20.jpeg", "image/d21.jpeg", "image/d22.jpeg", "image/d23.jpeg",
+                "image/d24.jpeg", "image/d25.jpeg", "image/d26.jpeg", "image/d27.jpeg",
+                "image/d29.jpeg"
+            ];
+
+            const gallery = document.getElementById("gallery");
+            const popup = document.getElementById("popup");
+            const popupImg = document.getElementById("popupImg");
+
+            images.forEach((src) => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "img-wrapper";
+
+                const img = document.createElement("img");
+                img.src = src;
+
+                img.onload = () => {
+                    wrapper.classList.add("loaded");
+                };
+
+                wrapper.onclick = () => {
+                    popup.style.display = "flex";
+                    popupImg.src = src;
+                };
+
+                wrapper.appendChild(img);
+                gallery.appendChild(wrapper);
+            });
+
+            // Close popup logic attached to window object so inline HTML functions work
+            window.closePopup = function() {
+                popup.style.display = "none";
+            };
+
+            popup.onclick = (e) => {
+                if (e.target !== popupImg) {
+                    window.closePopup();
+                }
+            };
+        });
+    </script>
+</body>
+</html>
